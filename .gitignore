@@ -34,3 +34,6 @@ build/
 /mvnw.cmd
 /mvnw
 /.mvn/
+/subscription-compose/docker-logs/
+/logs/
+/db/
