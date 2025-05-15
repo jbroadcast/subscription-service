@@ -1,3 +1,20 @@
 spring:
   application:
     name: subscription-service
+
+  profiles:
+    active: pg
+#    active: h2
+
+  jpa:
+    # Whether to initialize the schema on startup / Инициализировать ли схему при запуске
+    #    отключение генерации таблиц на основе описанных сущностей в коде
+    generate-ddl: true
+    #    hibernate:
+    #      ddl-auto: update  # none
+    # выводить SQL запросы в лог
+    show-sql: true
+    properties:
+      hibernate:
+        format_sql: true
+    open-in-view: false

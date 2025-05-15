@@ -1,0 +1,55 @@
+version: '3.7'
+
+networks:
+  application:
+    driver: bridge
+
+services:
+
+  subscription-service:
+    image: subscription-service:${SERVICE_VERSION:-latest}
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgresql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:postgresql://postgresql:5432/postgres
+      SPRING_DATASOURCE_USERNAME: postgres
+      SPRING_DATASOURCE_PASSWORD: postgres
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+  postgresql:
+    image: postgres:${POSTGRESQL_VERSION:-latest}
+    container_name: pg-postgres-16
+    hostname: postgresql-server
+    environment:
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+    ports:
+      - "5432:5432"
+    volumes:
+      - data01_postgresql_16.1:/var/lib/postgresql/data
+    command: [ "postgres", "-c", "config_file=/etc/postgresql/postgresql.conf" ] # Файл конфигурации
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+  pgadmin:
+    image: dpage/pgadmin4:${PG_ADMIN4_VERSION:-latest}
+    container_name: pg-pgadmin4
+    environment:
+      - PGADMIN_DEFAULT_EMAIL=admin@admin.com
+      - PGADMIN_DEFAULT_PASSWORD=admin
+    ports:
+      - '15432:80'
+    volumes:
+      - data_pgadmin:/var/lib/pgadmin
+    networks:
+      - ${GLOBAL_NETWORK:-services}
+
+volumes:
+  data01_postgresql_16.1:
+    driver: local
+  data_pgadmin:
+    driver: local

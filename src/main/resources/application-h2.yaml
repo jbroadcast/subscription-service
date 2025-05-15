@@ -1,0 +1,17 @@
+spring:
+  datasource:
+    url: jdbc:h2:./db/h2_db;MODE=PostgreSQL
+    username: u
+    password: 1
+#
+  h2:
+    console:
+      enabled: true
+
+#  sql:
+#    init:
+#      # Supported database initialization modes:
+#      #	ALWAYS - Always initialize the database
+#      #	EMBEDDED (default) - Only initialize an embedded database
+#      #	NEVER - Never initialize the database
+#      mode: never
